@@ -52,6 +52,13 @@ const Sidebar = () => {
       <div className="absolute bottom-8 left-4 right-4">
         <div className="cyber-card p-4 neon-border">
           <div className="flex items-center gap-3">
+            <div className="flex flex-col items-center gap-1">
+              <div className="flex items-center gap-1 text-xs font-bold text-primary">
+                <Icon name="Star" size={12} className="fill-primary" />
+                <span>2450</span>
+              </div>
+              <div className="text-[10px] text-muted-foreground">РЕЙТИНГ</div>
+            </div>
             <div className="w-10 h-10 relative">
               <div className="absolute inset-0 bg-primary/20 animate-ping"></div>
               <div className="relative w-full h-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-background font-bold"
