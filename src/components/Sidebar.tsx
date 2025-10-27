@@ -9,6 +9,7 @@ const Sidebar = () => {
     { id: 'feed', icon: 'Home', label: 'Лента', path: '/' },
     { id: 'profile', icon: 'User', label: 'Профиль', path: '/profile' },
     { id: 'messages', icon: 'MessageCircle', label: 'Сообщения', path: '/messages' },
+    { id: 'map', icon: 'Map', label: 'Карта', path: '/map' },
     { id: 'friends', icon: 'Users', label: 'Друзья', path: '/friends' },
     { id: 'groups', icon: 'UsersRound', label: 'Группы', path: '/groups' },
     { id: 'settings', icon: 'Settings', label: 'Настройки', path: '/settings' },
