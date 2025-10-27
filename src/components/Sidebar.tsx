@@ -1,16 +1,17 @@
-import { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Icon from '@/components/ui/icon';
 
 const Sidebar = () => {
-  const [activeTab, setActiveTab] = useState('feed');
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const menuItems = [
-    { id: 'feed', icon: 'Home', label: 'Лента' },
-    { id: 'profile', icon: 'User', label: 'Профиль' },
-    { id: 'messages', icon: 'MessageCircle', label: 'Сообщения' },
-    { id: 'friends', icon: 'Users', label: 'Друзья' },
-    { id: 'groups', icon: 'UsersRound', label: 'Группы' },
-    { id: 'settings', icon: 'Settings', label: 'Настройки' },
+    { id: 'feed', icon: 'Home', label: 'Лента', path: '/' },
+    { id: 'profile', icon: 'User', label: 'Профиль', path: '/profile' },
+    { id: 'messages', icon: 'MessageCircle', label: 'Сообщения', path: '/messages' },
+    { id: 'friends', icon: 'Users', label: 'Друзья', path: '/friends' },
+    { id: 'groups', icon: 'UsersRound', label: 'Группы', path: '/groups' },
+    { id: 'settings', icon: 'Settings', label: 'Настройки', path: '/settings' },
   ];
 
   return (
@@ -25,9 +26,9 @@ const Sidebar = () => {
         {menuItems.map((item) => (
           <button
             key={item.id}
-            onClick={() => setActiveTab(item.id)}
+            onClick={() => navigate(item.path)}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
-              activeTab === item.id
+              location.pathname === item.path
                 ? 'bg-gradient-to-r from-primary to-secondary text-white shadow-lg scale-105'
                 : 'text-foreground hover:bg-muted hover:scale-102'
             }`}
