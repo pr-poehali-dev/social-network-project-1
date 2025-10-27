@@ -1,5 +1,6 @@
 import Icon from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
+import UserRank from './UserRank';
 
 const ProfileHeader = () => {
   return (
@@ -18,7 +19,7 @@ const ProfileHeader = () => {
       <div className="px-8 pb-6">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 -mt-16 relative">
           <div className="flex flex-col md:flex-row items-center md:items-end gap-4">
-            <div className="relative">
+            <div className="relative flex flex-col items-center gap-3">
               <div className="w-32 h-32 rounded-full bg-gradient-to-br from-primary to-secondary p-1 shadow-xl">
                 <div className="w-full h-full rounded-full bg-card flex items-center justify-center">
                   <span className="text-5xl font-bold bg-gradient-to-br from-primary to-secondary bg-clip-text text-transparent">
@@ -26,9 +27,10 @@ const ProfileHeader = () => {
                   </span>
                 </div>
               </div>
-              <button className="absolute bottom-2 right-2 w-10 h-10 bg-primary rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
+              <button className="absolute bottom-12 right-0 w-10 h-10 bg-primary rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
                 <Icon name="Camera" size={18} className="text-white" />
               </button>
+              <UserRank rank="МАСТЕР" level={47} />
             </div>
 
             <div className="text-center md:text-left mb-4 md:mb-0">

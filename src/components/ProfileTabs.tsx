@@ -15,6 +15,7 @@ const ProfileTabs = () => {
       initialLikes: 342,
       initialShares: 67,
       initialComments: 89,
+      rank: 'МАСТЕР' as const,
     },
     {
       id: 2,
@@ -25,6 +26,7 @@ const ProfileTabs = () => {
       initialLikes: 256,
       initialShares: 45,
       initialComments: 52,
+      rank: 'МАСТЕР' as const,
     },
     {
       id: 3,
@@ -36,6 +38,7 @@ const ProfileTabs = () => {
       initialLikes: 489,
       initialShares: 92,
       initialComments: 134,
+      rank: 'МАСТЕР' as const,
     },
   ];
 

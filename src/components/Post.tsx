@@ -3,6 +3,7 @@ import Icon from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Textarea } from '@/components/ui/textarea';
+import UserRank from './UserRank';
 
 interface PostProps {
   id: number;
@@ -14,9 +15,10 @@ interface PostProps {
   initialLikes: number;
   initialShares: number;
   initialComments: number;
+  rank?: 'НОВИЧОК' | 'УЧАСТНИК' | 'ЭКСПЕРТ' | 'МАСТЕР' | 'ЛЕГЕНДА' | 'АДМИН';
 }
 
-const Post = ({ author, avatar, time, content, image, initialLikes, initialShares, initialComments }: PostProps) => {
+const Post = ({ author, avatar, time, content, image, initialLikes, initialShares, initialComments, rank = 'УЧАСТНИК' }: PostProps) => {
   const [likes, setLikes] = useState(initialLikes);
   const [shares, setShares] = useState(initialShares);
   const [comments, setComments] = useState(initialComments);
@@ -51,12 +53,17 @@ const Post = ({ author, avatar, time, content, image, initialLikes, initialShare
       <div className="absolute bottom-0 left-0 w-20 h-20 bg-secondary/5 blur-3xl"></div>
       
       <div className="flex items-center gap-3 mb-4 relative z-10">
-        <Avatar className="w-12 h-12 border-2 border-primary/30">
-          <AvatarFallback className="bg-gradient-to-br from-primary to-secondary text-background font-bold">
-            {avatar}
-          </AvatarFallback>
-        </Avatar>
-        <div className="flex-1">
+        <div className="relative">
+          <Avatar className="w-12 h-12 border-2 border-primary/30">
+            <AvatarFallback className="bg-gradient-to-br from-primary to-secondary text-background font-bold">
+              {avatar}
+            </AvatarFallback>
+          </Avatar>
+          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap">
+            <UserRank rank={rank} compact />
+          </div>
+        </div>
+        <div className="flex-1 mt-2">
           <h3 className="font-semibold tracking-wide">{author}</h3>
           <p className="text-sm text-primary/70">{time}</p>
         </div>

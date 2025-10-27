@@ -15,6 +15,7 @@ const Index = () => {
       initialLikes: 234,
       initialShares: 45,
       initialComments: 67,
+      rank: 'ЭКСПЕРТ' as const,
     },
     {
       id: 2,
@@ -25,6 +26,7 @@ const Index = () => {
       initialLikes: 189,
       initialShares: 32,
       initialComments: 41,
+      rank: 'ЛЕГЕНДА' as const,
     },
     {
       id: 3,
@@ -36,6 +38,7 @@ const Index = () => {
       initialLikes: 456,
       initialShares: 89,
       initialComments: 123,
+      rank: 'МАСТЕР' as const,
     },
     {
       id: 4,
@@ -46,6 +49,7 @@ const Index = () => {
       initialLikes: 78,
       initialShares: 12,
       initialComments: 34,
+      rank: 'УЧАСТНИК' as const,
     },
   ];
 
