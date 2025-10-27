@@ -2,6 +2,7 @@ import Icon from '@/components/ui/icon';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
 import { useState } from 'react';
+import RatingBattery from '@/components/RatingBattery';
 
 interface Chat {
   id: number;
@@ -11,6 +12,7 @@ interface Chat {
   time: string;
   unread: number;
   online: boolean;
+  rating: number;
 }
 
 interface ChatListProps {
@@ -30,6 +32,7 @@ const ChatList = ({ onSelectChat, selectedChatId }: ChatListProps) => {
       time: '14:23',
       unread: 2,
       online: true,
+      rating: 3200,
     },
     {
       id: 2,
@@ -39,6 +42,7 @@ const ChatList = ({ onSelectChat, selectedChatId }: ChatListProps) => {
       time: '12:45',
       unread: 0,
       online: true,
+      rating: 4800,
     },
     {
       id: 3,
@@ -48,6 +52,7 @@ const ChatList = ({ onSelectChat, selectedChatId }: ChatListProps) => {
       time: '11:20',
       unread: 5,
       online: false,
+      rating: 3800,
     },
     {
       id: 4,
@@ -57,6 +62,7 @@ const ChatList = ({ onSelectChat, selectedChatId }: ChatListProps) => {
       time: 'Вчера',
       unread: 0,
       online: false,
+      rating: 850,
     },
     {
       id: 5,
@@ -66,6 +72,7 @@ const ChatList = ({ onSelectChat, selectedChatId }: ChatListProps) => {
       time: 'Вчера',
       unread: 1,
       online: true,
+      rating: 2900,
     },
   ];
 
@@ -116,7 +123,10 @@ const ChatList = ({ onSelectChat, selectedChatId }: ChatListProps) => {
 
             <div className="flex-1 text-left overflow-hidden">
               <div className="flex items-center justify-between mb-1">
-                <p className="font-semibold truncate">{chat.name}</p>
+                <div className="flex items-center gap-2">
+                  <p className="font-semibold truncate">{chat.name}</p>
+                  <RatingBattery rating={chat.rating} size="sm" showValue={false} />
+                </div>
                 <span className="text-xs text-muted-foreground">{chat.time}</span>
               </div>
               <p className="text-sm text-muted-foreground truncate">{chat.lastMessage}</p>

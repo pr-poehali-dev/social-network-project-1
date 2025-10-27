@@ -3,6 +3,7 @@ import Icon from '@/components/ui/icon';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import RatingBattery from '@/components/RatingBattery';
 
 interface Message {
   id: number;
@@ -26,11 +27,11 @@ const ChatWindow = ({ chatId }: ChatWindowProps) => {
   ]);
 
   const chatInfo = {
-    1: { name: 'Мария Иванова', avatar: 'М', online: true },
-    2: { name: 'Дмитрий Петров', avatar: 'Д', online: true },
-    3: { name: 'Екатерина Смирнова', avatar: 'Е', online: false },
-    4: { name: 'Иван Козлов', avatar: 'И', online: false },
-    5: { name: 'Анна Волкова', avatar: 'А', online: true },
+    1: { name: 'Мария Иванова', avatar: 'М', online: true, rating: 3200 },
+    2: { name: 'Дмитрий Петров', avatar: 'Д', online: true, rating: 4800 },
+    3: { name: 'Екатерина Смирнова', avatar: 'Е', online: false, rating: 3800 },
+    4: { name: 'Иван Козлов', avatar: 'И', online: false, rating: 850 },
+    5: { name: 'Анна Волкова', avatar: 'А', online: true, rating: 2900 },
   };
 
   const currentChat = chatId ? chatInfo[chatId as keyof typeof chatInfo] : null;
@@ -84,7 +85,10 @@ const ChatWindow = ({ chatId }: ChatWindowProps) => {
             )}
           </div>
           <div>
-            <h3 className="font-semibold">{currentChat.name}</h3>
+            <div className="flex items-center gap-2">
+              <h3 className="font-semibold">{currentChat.name}</h3>
+              <RatingBattery rating={currentChat.rating} size="sm" showValue={true} />
+            </div>
             <p className="text-sm text-muted-foreground">
               {currentChat.online ? 'В сети' : 'Не в сети'}
             </p>

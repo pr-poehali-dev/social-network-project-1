@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Textarea } from '@/components/ui/textarea';
 import UserRank from './UserRank';
+import RatingBattery from '@/components/RatingBattery';
 
 interface PostProps {
   id: number;
@@ -16,9 +17,10 @@ interface PostProps {
   initialShares: number;
   initialComments: number;
   rank?: 'НОВИЧОК' | 'УЧАСТНИК' | 'ЭКСПЕРТ' | 'МАСТЕР' | 'ЛЕГЕНДА' | 'АДМИН';
+  rating?: number;
 }
 
-const Post = ({ author, avatar, time, content, image, initialLikes, initialShares, initialComments, rank = 'УЧАСТНИК' }: PostProps) => {
+const Post = ({ author, avatar, time, content, image, initialLikes, initialShares, initialComments, rank = 'УЧАСТНИК', rating = 1500 }: PostProps) => {
   const [likes, setLikes] = useState(initialLikes);
   const [shares, setShares] = useState(initialShares);
   const [comments, setComments] = useState(initialComments);
@@ -64,7 +66,10 @@ const Post = ({ author, avatar, time, content, image, initialLikes, initialShare
           </div>
         </div>
         <div className="flex-1 mt-2">
-          <h3 className="font-semibold tracking-wide">{author}</h3>
+          <div className="flex items-center gap-2">
+            <h3 className="font-semibold tracking-wide">{author}</h3>
+            <RatingBattery rating={rating} size="sm" showValue={true} />
+          </div>
           <p className="text-sm text-primary/70">{time}</p>
         </div>
         <div className="flex items-center gap-1 text-xs text-primary">

@@ -1,6 +1,7 @@
 import Icon from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
 import UserRank from './UserRank';
+import RatingBattery from '@/components/RatingBattery';
 
 const ProfileHeader = () => {
   return (
@@ -34,7 +35,10 @@ const ProfileHeader = () => {
             </div>
 
             <div className="text-center md:text-left mb-4 md:mb-0">
-              <h1 className="text-3xl font-bold mb-1">Александр Петров</h1>
+              <div className="flex items-center gap-3 justify-center md:justify-start mb-2">
+                <h1 className="text-3xl font-bold">Александр Петров</h1>
+                <RatingBattery rating={2450} size="lg" showValue={true} />
+              </div>
               <p className="text-muted-foreground mb-2">@alex_dev</p>
               <p className="text-sm max-w-md">
                 Веб-разработчик | Люблю создавать красивые интерфейсы ✨ | Москва 📍
