@@ -3,7 +3,7 @@ import Icon from '@/components/ui/icon';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import PostCard from '@/components/PostCard';
+import Post from '@/components/Post';
 
 interface GroupViewProps {
   groupId: number;
@@ -54,9 +54,10 @@ const GroupView = ({ groupId, onBack }: GroupViewProps) => {
       rating: 4200,
       time: '2 часа назад',
       content: 'Отличная статья о новых возможностях CSS Grid! Всем рекомендую к прочтению 🚀',
-      likes: 124,
-      comments: 18,
-      shares: 9,
+      initialLikes: 124,
+      initialComments: 18,
+      initialShares: 9,
+      rank: 'ЭКСПЕРТ' as const,
     },
     {
       id: 2,
@@ -65,9 +66,10 @@ const GroupView = ({ groupId, onBack }: GroupViewProps) => {
       rating: 3800,
       time: '5 часов назад',
       content: 'Поделюсь своим опытом внедрения TypeScript в большой проект. Кто сталкивался с подобным?',
-      likes: 89,
-      comments: 34,
-      shares: 12,
+      initialLikes: 89,
+      initialComments: 34,
+      initialShares: 12,
+      rank: 'УЧАСТНИК' as const,
     },
   ];
 
@@ -186,7 +188,7 @@ const GroupView = ({ groupId, onBack }: GroupViewProps) => {
 
       <div className="mt-6 space-y-6">
         {posts.map((post) => (
-          <PostCard key={post.id} {...post} />
+          <Post key={post.id} {...post} />
         ))}
       </div>
     </div>
