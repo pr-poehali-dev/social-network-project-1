@@ -1,19 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/icon';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import CreateGroupModal from '@/components/CreateGroupModal';
-
-interface Group {
-  id: number;
-  name: string;
-  avatar: string;
-  members: number;
-  description: string;
-  isJoined: boolean;
-  category: string;
-}
+import { groupsStore, type Group } from '@/store/groupsStore';
 
 interface GroupsListProps {
   onGroupClick: (groupId: number) => void;
@@ -22,53 +13,14 @@ interface GroupsListProps {
 const GroupsList = ({ onGroupClick }: GroupsListProps) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [groups, setGroups] = useState<Group[]>([
-    {
-      id: 1,
-      name: 'Веб-разработка',
-      avatar: '💻',
-      members: 15234,
-      description: 'Сообщество веб-разработчиков',
-      isJoined: true,
-      category: 'Технологии',
-    },
-    {
-      id: 2,
-      name: 'Дизайн и UX',
-      avatar: '🎨',
-      members: 8921,
-      description: 'Всё о современном дизайне',
-      isJoined: true,
-      category: 'Дизайн',
-    },
-    {
-      id: 3,
-      name: 'Путешествия',
-      avatar: '✈️',
-      members: 23456,
-      description: 'Делимся впечатлениями о поездках',
-      isJoined: false,
-      category: 'Образ жизни',
-    },
-    {
-      id: 4,
-      name: 'Фотография',
-      avatar: '📸',
-      members: 12890,
-      description: 'Искусство фотографии',
-      isJoined: true,
-      category: 'Творчество',
-    },
-    {
-      id: 5,
-      name: 'Кулинария',
-      avatar: '🍳',
-      members: 19234,
-      description: 'Рецепты и кулинарные советы',
-      isJoined: false,
-      category: 'Еда',
-    },
-  ]);
+  const [groups, setGroups] = useState<Group[]>(groupsStore.getGroups());
+
+  useEffect(() => {
+    const unsubscribe = groupsStore.subscribe(() => {
+      setGroups(groupsStore.getGroups());
+    });
+    return unsubscribe;
+  }, []);
 
   const filteredGroups = groups.filter((group) =>
     group.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -76,21 +28,11 @@ const GroupsList = ({ onGroupClick }: GroupsListProps) => {
 
   const handleToggleJoin = (groupId: number, e: React.MouseEvent) => {
     e.stopPropagation();
-    setGroups(
-      groups.map((group) =>
-        group.id === groupId ? { ...group, isJoined: !group.isJoined } : group
-      )
-    );
+    groupsStore.toggleJoin(groupId);
   };
 
-  const handleCreateGroup = (newGroup: Omit<Group, 'id' | 'members' | 'isJoined'>) => {
-    const group: Group = {
-      ...newGroup,
-      id: groups.length + 1,
-      members: 1,
-      isJoined: true,
-    };
-    setGroups([group, ...groups]);
+  const handleCreateGroup = (newGroup: { name: string; avatar: string; description: string; category: string }) => {
+    groupsStore.addGroup(newGroup);
     setIsCreateModalOpen(false);
   };
 

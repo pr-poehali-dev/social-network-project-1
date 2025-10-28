@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Icon from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
+import { groupsStore, type Group } from '@/store/groupsStore';
 
 interface City {
   id: number;
@@ -18,9 +20,19 @@ interface MapObject {
 }
 
 const InteractiveMap = () => {
+  const navigate = useNavigate();
   const [objects, setObjects] = useState<MapObject[]>([]);
   const [selectedTool, setSelectedTool] = useState<'base' | 'tower' | 'resource' | 'marker' | null>(null);
   const [hoveredCity, setHoveredCity] = useState<number | null>(null);
+  const [hoveredGroup, setHoveredGroup] = useState<number | null>(null);
+  const [groups, setGroups] = useState<Group[]>(groupsStore.getGroups());
+
+  useEffect(() => {
+    const unsubscribe = groupsStore.subscribe(() => {
+      setGroups(groupsStore.getGroups());
+    });
+    return unsubscribe;
+  }, []);
 
   const cities: City[] = [
     { id: 1, name: 'Москва', x: 45, y: 42 },
@@ -163,6 +175,38 @@ const InteractiveMap = () => {
                   <div className="bg-card border border-primary/50 px-2 py-1 text-xs font-mono text-primary shadow-lg"
                        style={{ clipPath: 'polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 4px 100%, 0 calc(100% - 4px))' }}>
                     {city.name}
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+
+          {groups.map((group) => (
+            <div
+              key={`group-${group.id}`}
+              className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group"
+              style={{ left: `${group.x}%`, top: `${group.y}%` }}
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate('/groups');
+                setTimeout(() => {
+                  window.dispatchEvent(new CustomEvent('openGroup', { detail: group.id }));
+                }, 100);
+              }}
+              onMouseEnter={() => setHoveredGroup(group.id)}
+              onMouseLeave={() => setHoveredGroup(null)}
+            >
+              <div className="text-4xl relative hover:scale-125 transition-transform">
+                {group.avatar}
+                <div className="absolute inset-0 blur-lg opacity-50 animate-pulse" style={{ background: 'hsl(var(--primary))' }}></div>
+              </div>
+              
+              {hoveredGroup === group.id && (
+                <div className="absolute -top-16 left-1/2 transform -translate-x-1/2 whitespace-nowrap z-10">
+                  <div className="bg-card border border-primary/50 px-3 py-2 text-xs font-mono shadow-xl"
+                       style={{ clipPath: 'polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 4px 100%, 0 calc(100% - 4px))' }}>
+                    <div className="text-primary font-bold">{group.name}</div>
+                    <div className="text-muted-foreground">{group.members.toLocaleString('ru-RU')} участников</div>
                   </div>
                 </div>
               )}

@@ -1,10 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Sidebar from '@/components/Sidebar';
 import GroupsList from '@/components/GroupsList';
 import GroupView from '@/components/GroupView';
 
 const Groups = () => {
   const [selectedGroupId, setSelectedGroupId] = useState<number | null>(null);
+
+  useEffect(() => {
+    const handleOpenGroup = (event: CustomEvent) => {
+      setSelectedGroupId(event.detail);
+    };
+
+    window.addEventListener('openGroup', handleOpenGroup as EventListener);
+    return () => {
+      window.removeEventListener('openGroup', handleOpenGroup as EventListener);
+    };
+  }, []);
 
   return (
     <div className="flex min-h-screen bg-background">
