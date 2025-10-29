@@ -217,14 +217,23 @@ const InteractiveMap = () => {
             backgroundImage: `
               repeating-linear-gradient(0deg, transparent, transparent 20px, hsl(var(--primary) / 0.05) 20px, hsl(var(--primary) / 0.05) 21px),
               repeating-linear-gradient(90deg, transparent, transparent 20px, hsl(var(--primary) / 0.05) 20px, hsl(var(--primary) / 0.05) 21px)
-            `
+            `,
+            transform: 'perspective(1200px) rotateX(45deg) rotateZ(-2deg)',
+            transformStyle: 'preserve-3d',
+            transformOrigin: 'center center'
           }}
         >
-          <svg viewBox="0 0 100 60" className="w-full h-full">
+          <svg viewBox="0 0 100 60" className="w-full h-full" style={{ transform: 'translateZ(10px)', filter: 'drop-shadow(0 15px 25px rgba(0,0,0,0.5))' }}>
+            <defs>
+              <linearGradient id="mapGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="hsl(var(--muted) / 0.5)" />
+                <stop offset="100%" stopColor="hsl(var(--muted) / 0.2)" />
+              </linearGradient>
+            </defs>
             <path
               d="M 15,25 L 20,20 L 30,22 L 35,18 L 45,20 L 50,25 L 55,22 L 65,25 L 75,28 L 85,30 L 95,32 L 98,38 L 95,45 L 90,50 L 80,52 L 70,50 L 60,48 L 50,50 L 40,52 L 30,50 L 20,48 L 15,42 L 12,35 L 15,25 Z"
-              fill="hsl(var(--muted) / 0.3)"
-              stroke="hsl(var(--primary) / 0.5)"
+              fill="url(#mapGradient)"
+              stroke="hsl(var(--primary) / 0.7)"
               strokeWidth="0.5"
               className="hover:fill-primary/10 transition-all"
             />
@@ -234,11 +243,17 @@ const InteractiveMap = () => {
             <div
               key={city.id}
               className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group"
-              style={{ left: `${city.x}%`, top: `${city.y}%` }}
+              style={{ 
+                left: `${city.x}%`, 
+                top: `${city.y}%`,
+                transform: 'translateZ(15px) translate(-50%, -50%)',
+                transformStyle: 'preserve-3d'
+              }}
               onMouseEnter={() => setHoveredCity(city.id)}
               onMouseLeave={() => setHoveredCity(null)}
             >
-              <div className="w-2 h-2 bg-primary rounded-full animate-pulse shadow-lg shadow-primary/50"></div>
+              <div className="w-2 h-2 bg-primary rounded-full animate-pulse" 
+                   style={{ boxShadow: '0 0 20px hsl(var(--primary)), 0 8px 15px rgba(0,0,0,0.6)' }}></div>
               <div className="w-4 h-4 border-2 border-primary/30 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 group-hover:scale-150 transition-transform"></div>
               
               {hoveredCity === city.id && (
@@ -256,7 +271,12 @@ const InteractiveMap = () => {
             <div
               key={`group-${group.id}`}
               className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group"
-              style={{ left: `${group.x}%`, top: `${group.y}%` }}
+              style={{ 
+                left: `${group.x}%`, 
+                top: `${group.y}%`,
+                transform: 'translateZ(30px) translate(-50%, -50%)',
+                transformStyle: 'preserve-3d'
+              }}
               onClick={(e) => {
                 e.stopPropagation();
                 navigate('/groups');
@@ -267,9 +287,23 @@ const InteractiveMap = () => {
               onMouseEnter={() => setHoveredGroup(group.id)}
               onMouseLeave={() => setHoveredGroup(null)}
             >
-              <div className="text-4xl relative hover:scale-125 transition-transform">
-                {group.avatar}
-                <div className="absolute inset-0 blur-lg opacity-50 animate-pulse" style={{ background: 'hsl(var(--primary))' }}></div>
+              <div className="relative hover:scale-125 transition-all duration-300" 
+                   style={{ 
+                     transform: 'translateZ(20px)',
+                     filter: 'drop-shadow(0 20px 30px rgba(0,0,0,0.8))'
+                   }}>
+                <div className="text-5xl relative" 
+                     style={{ 
+                       textShadow: '0 5px 15px rgba(0,0,0,0.8), 0 0 30px hsl(var(--primary))',
+                       transform: 'rotateX(-45deg) rotateZ(2deg)'
+                     }}>
+                  {group.avatar}
+                </div>
+                <div className="absolute inset-0 blur-xl opacity-60 animate-pulse" 
+                     style={{ 
+                       background: 'radial-gradient(circle, hsl(var(--primary)) 0%, transparent 70%)',
+                       transform: 'translateZ(-10px)'
+                     }}></div>
               </div>
               
               {hoveredGroup === group.id && (
@@ -288,13 +322,22 @@ const InteractiveMap = () => {
             <div
               key={obj.id}
               className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group"
-              style={{ left: `${obj.x}%`, top: `${obj.y}%` }}
+              style={{ 
+                left: `${obj.x}%`, 
+                top: `${obj.y}%`,
+                transform: 'translateZ(25px) translate(-50%, -50%)',
+                transformStyle: 'preserve-3d'
+              }}
               onClick={(e) => {
                 e.stopPropagation();
                 removeObject(obj.id);
               }}
             >
-              <div className={`${getObjectColor(obj.type)} relative`}>
+              <div className={`${getObjectColor(obj.type)} relative`}
+                   style={{ 
+                     filter: 'drop-shadow(0 15px 20px rgba(0,0,0,0.7))',
+                     transform: 'translateZ(10px)'
+                   }}>
                 <Icon name={getObjectIcon(obj.type)} size={24} className="drop-shadow-lg" />
                 <div className="absolute inset-0 bg-current blur-md opacity-50 animate-pulse"></div>
               </div>
