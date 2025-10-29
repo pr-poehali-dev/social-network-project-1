@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Icon from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
 import { groupsStore, type Group } from '@/store/groupsStore';
-import { profileStore } from '@/store/profileStore';
 
 interface City {
   id: number;
@@ -27,18 +26,10 @@ const InteractiveMap = () => {
   const [hoveredCity, setHoveredCity] = useState<number | null>(null);
   const [hoveredGroup, setHoveredGroup] = useState<number | null>(null);
   const [groups, setGroups] = useState<Group[]>(groupsStore.getGroups());
-  const [userGender, setUserGender] = useState<'male' | 'female'>(profileStore.getProfile().gender);
 
   useEffect(() => {
     const unsubscribe = groupsStore.subscribe(() => {
       setGroups(groupsStore.getGroups());
-    });
-    return unsubscribe;
-  }, []);
-
-  useEffect(() => {
-    const unsubscribe = profileStore.subscribe(() => {
-      setUserGender(profileStore.getProfile().gender);
     });
     return unsubscribe;
   }, []);
@@ -145,68 +136,6 @@ const InteractiveMap = () => {
       <div className="cyber-card p-6 flex-1 relative overflow-hidden">
         <div className="absolute top-4 left-4 text-xs text-primary/70 font-mono z-10">
           MAP://RUSSIA
-        </div>
-
-        {/* Character Silhouette */}
-        <div className="absolute left-8 bottom-0 z-20 opacity-70 hover:opacity-100 transition-opacity">
-          <svg 
-            viewBox="0 0 100 300" 
-            className="h-[80vh] w-auto"
-            style={{ filter: 'drop-shadow(0 0 20px hsl(var(--primary) / 0.5))' }}
-          >
-            {userGender === 'male' ? (
-              // Male silhouette
-              <g>
-                {/* Head */}
-                <circle cx="50" cy="30" r="18" fill="hsl(var(--primary) / 0.3)" stroke="hsl(var(--primary))" strokeWidth="1.5" />
-                {/* Neck */}
-                <rect x="44" y="46" width="12" height="10" fill="hsl(var(--primary) / 0.3)" stroke="hsl(var(--primary))" strokeWidth="1.5" />
-                {/* Body/Torso */}
-                <path d="M 30,56 L 30,140 L 40,180 L 45,180 L 45,140 L 55,140 L 55,180 L 60,180 L 70,140 L 70,56 Z" 
-                      fill="hsl(var(--primary) / 0.3)" stroke="hsl(var(--primary))" strokeWidth="1.5" />
-                {/* Shoulders */}
-                <rect x="20" y="56" width="60" height="12" fill="hsl(var(--primary) / 0.3)" stroke="hsl(var(--primary))" strokeWidth="1.5" />
-                {/* Left arm */}
-                <rect x="15" y="68" width="10" height="60" fill="hsl(var(--primary) / 0.3)" stroke="hsl(var(--primary))" strokeWidth="1.5" />
-                {/* Right arm */}
-                <rect x="75" y="68" width="10" height="60" fill="hsl(var(--primary) / 0.3)" stroke="hsl(var(--primary))" strokeWidth="1.5" />
-                {/* Left leg */}
-                <path d="M 40,180 L 38,260 L 32,300 L 42,300 L 45,260 Z" 
-                      fill="hsl(var(--primary) / 0.3)" stroke="hsl(var(--primary))" strokeWidth="1.5" />
-                {/* Right leg */}
-                <path d="M 60,180 L 62,260 L 68,300 L 58,300 L 55,260 Z" 
-                      fill="hsl(var(--primary) / 0.3)" stroke="hsl(var(--primary))" strokeWidth="1.5" />
-              </g>
-            ) : (
-              // Female silhouette
-              <g>
-                {/* Head */}
-                <circle cx="50" cy="30" r="18" fill="hsl(var(--primary) / 0.3)" stroke="hsl(var(--primary))" strokeWidth="1.5" />
-                {/* Hair/head decoration */}
-                <path d="M 32,20 Q 50,15 68,20 L 68,35 Q 50,30 32,35 Z" 
-                      fill="hsl(var(--primary) / 0.3)" stroke="hsl(var(--primary))" strokeWidth="1.5" />
-                {/* Neck */}
-                <rect x="44" y="46" width="12" height="10" fill="hsl(var(--primary) / 0.3)" stroke="hsl(var(--primary))" strokeWidth="1.5" />
-                {/* Body/Torso with waist */}
-                <path d="M 28,56 L 25,100 L 30,140 L 40,180 L 45,180 L 45,140 L 55,140 L 55,180 L 60,180 L 70,140 L 75,100 L 72,56 Z" 
-                      fill="hsl(var(--primary) / 0.3)" stroke="hsl(var(--primary))" strokeWidth="1.5" />
-                {/* Shoulders */}
-                <rect x="20" y="56" width="60" height="10" rx="3" fill="hsl(var(--primary) / 0.3)" stroke="hsl(var(--primary))" strokeWidth="1.5" />
-                {/* Left arm */}
-                <path d="M 18,66 L 16,120 L 22,122 L 24,68 Z" 
-                      fill="hsl(var(--primary) / 0.3)" stroke="hsl(var(--primary))" strokeWidth="1.5" />
-                {/* Right arm */}
-                <path d="M 82,66 L 84,120 L 78,122 L 76,68 Z" 
-                      fill="hsl(var(--primary) / 0.3)" stroke="hsl(var(--primary))" strokeWidth="1.5" />
-                {/* Left leg with dress shape */}
-                <path d="M 40,180 L 38,260 L 32,300 L 42,300 L 45,260 Z" 
-                      fill="hsl(var(--primary) / 0.3)" stroke="hsl(var(--primary))" strokeWidth="1.5" />
-                {/* Right leg */}
-                <path d="M 60,180 L 62,260 L 68,300 L 58,300 L 55,260 Z" 
-                      fill="hsl(var(--primary) / 0.3)" stroke="hsl(var(--primary))" strokeWidth="1.5" />
-              </g>
-            )}
-          </svg>
         </div>
 
         <div
